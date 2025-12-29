@@ -1,0 +1,105 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="mb-4">
+    <h2>{{ event.title }}</h2>
+    <p class="text-muted">{{ event.date }}</p>
+    <p>{{ event.description }}</p>
+</div>
+
+<hr>
+
+<h4>
+    Рейтинг:
+    {% for i in "12345" %}
+        {% if event.average_rating >= forloop.counter %}
+            ⭐
+        {% else %}
+            ☆
+        {% endif %}
+    {% endfor %}
+    <small class="text-muted">
+        ({{ event.average_rating|floatformat:1 }}/5)
+    </small>
+</h4>
+
+<hr>
+
+<h4>Отзывы</h4>
+
+<ul class="list-group mb-4">
+    {% for review in reviews %}
+        <li class="list-group-item">
+            <strong>{{ review.user.username }}</strong>
+
+            <div>
+                {% for i in "12345" %}
+                    {% if review.rating >= forloop.counter %}
+                        ⭐
+                    {% else %}
+                        ☆
+                    {% endif %}
+                {% endfor %}
+            </div>
+
+            <p class="mt-2">{{ review.text }}</p>
+
+            <div class="text-muted small">
+                {{ review.created_at|date:"d.m.Y H:i" }}
+            </div>
+        </li>
+    {% empty %}
+        <li class="list-group-item text-muted">
+            Отзывов пока нет
+        </li>
+    {% endfor %}
+</ul>
+
+{% if user.is_authenticated %}
+    <h5>
+        {% if user_review %}
+            Редактировать мой отзыв
+        {% else %}
+            Оставить отзыв
+        {% endif %}
+    </h5>
+
+    <form method="post">
+        {% csrf_token %}
+
+        <div class="mb-3">
+            <label class="form-label">Оценка:</label><br>
+
+            <div class="star-rating">
+                {% for i in "54321" %}
+                    <input
+                        type="radio"
+                        name="rating"
+                        id="star{{ i }}"
+                        value="{{ i }}"
+                        {% if form.instance.rating == i|add:"0" %}checked{% endif %}
+                    >
+                    <label for="star{{ i }}">★</label>
+                {% endfor %}
+            </div>
+        </div>
+
+        <div class="mb-3">
+            {{ form.text }}
+        </div>
+
+        <button class="btn btn-primary">
+            {% if user_review %}Обновить{% else %}Отправить{% endif %}
+        </button>
+    </form>
+
+{% else %}
+    <p class="text-muted">
+        Чтобы оставить отзыв,
+        <a href="{% url 'login' %}">войдите</a> или
+        <a href="{% url 'register' %}">зарегистрируйтесь</a>.
+    </p>
+{% endif %}
+
+{% endblock %}
