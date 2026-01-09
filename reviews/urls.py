@@ -1,6 +1,7 @@
 from django.urls import path
-from .views import edit_review
+from . import views
 
 urlpatterns = [
-    path("edit/<int:review_id>/", edit_review, name="edit_review"),
+    path("edit/<int:review_id>/", views.review_edit, name="review_edit"),
+    path("delete/<int:review_id>/", views.review_delete, name="review_delete"),
 ]

@@ -1,0 +1,33 @@
+/* Контейнер сообщений */
+.messages-container {
+    position: fixed;
+    top: 80px;
+    right: 20px;
+    z-index: 1055;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+/* Само сообщение */
+.alert {
+    min-width: 280px;
+    max-width: 360px;
+    opacity: 0;
+    transform: translateX(120%);
+    transition: all 0.4s ease;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+    border-radius: 10px;
+}
+
+/* Появление */
+.alert.show-alert {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+/* Исчезновение */
+.alert.hide-alert {
+    opacity: 0;
+    transform: translateX(120%);
+}

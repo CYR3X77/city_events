@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+
+        <h3 class="mb-4">Редактировать отзыв</h3>
+
+        <form method="post">
+            {% csrf_token %}
+
+            <!-- ⭐ Рейтинг -->
+            <div class="mb-3">
+                <label class="form-label">Оценка:</label>
+                <div class="star-rating">
+                    {% for i in "54321" %}
+                        <input
+                            type="radio"
+                            id="star{{ i }}"
+                            name="rating"
+                            value="{{ i }}"
+                            {% if form.instance.rating == i|add:"0" %}checked{% endif %}
+                        >
+                        <label for="star{{ i }}">★</label>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <!-- ✍️ Текст -->
+            <div class="mb-3">
+                {{ form.text.label_tag }}
+                {{ form.text }}
+            </div>
+
+            <button type="submit" class="btn btn-primary">
+                Сохранить
+            </button>
+
+            <a href="{% url 'event_detail' form.instance.event.id %}"
+               class="btn btn-secondary ms-2">
+                Отмена
+            </a>
+        </form>
+
+    </div>
+</div>
+{% endblock %}
