@@ -74,3 +74,8 @@ python manage.py runserver
 Доступ к системе
 Главная страница сайта: http://127.0.0.1:8000/
 Админ-панель: http://127.0.0.1:8000/admin/
+
+## Видео-обзор работы проекта
+
+Видео-демонстрация работы сайта доступна по ссылке: 
+https://drive.google.com/file/d/1X4VS_B_DgZPB89EHuacWrFrbOTl7PeVH/view?usp=sharing
